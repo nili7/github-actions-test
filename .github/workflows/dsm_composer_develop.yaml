@@ -6,11 +6,11 @@ on:
       - dsm-data-pipeline/**
   push:
     branches:
-      - master #develop
+      - develop # master 
     paths:
       - dsm-data-pipeline/**
-    tags-ignore:
-      - staging.*
+    # tags-ignore:
+    #   - staging.*
 
 jobs:
   call-deploy-dsm-composer-dev:
@@ -18,5 +18,5 @@ jobs:
     uses: "./.github/workflows/dsm_deploy.yaml"
     with:
       env: "develop"
-      run_apply: ${{ github.ref == 'refs/heads/master' && github.event_name == 'push' }}
+      run_apply: ${{ github.ref == 'refs/heads/develop' && github.event_name == 'push' }}
     secrets: inherit

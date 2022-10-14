@@ -6,7 +6,7 @@ on:
       env:
         description: "Environment to deploy"
         type: string
-        required: true
+        required: false
       run_apply:
         description: "Whether to run or not apply command for terragrunt"
         required: true
@@ -15,7 +15,7 @@ on:
 
 jobs:
   terraform:
-    name: 'Test tags'
+    name: 'Test environment branches'
     runs-on: ubuntu-latest
     environment: ${{ inputs.env }}
     env:
@@ -31,11 +31,13 @@ jobs:
 
     - name: Print Composer DAG
       working-directory: ${{ env.working_dir }}
+      if: ${{ inputs.run_apply == false }}
       run: |
         cat composer-dags/composer.txt
 
     - name: Print environment variable
       working-directory: ${{ env.working_dir }}
+      if: ${{ inputs.run_apply == true }}
       run: |
         cat env/${{ inputs.env }}/env.txt
     
