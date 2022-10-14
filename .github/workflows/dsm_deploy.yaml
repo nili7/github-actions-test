@@ -15,7 +15,7 @@ on:
 
 jobs:
   terraform:
-    name: 'Test tags'
+    name: 'Test environment branches'
     runs-on: ubuntu-latest
     environment: ${{ inputs.env }}
     env:
@@ -36,6 +36,7 @@ jobs:
 
     - name: Print environment variable
       working-directory: ${{ env.working_dir }}
+      if: ${{ inputs.run_apply == true }}
       run: |
         cat env/${{ inputs.env }}/env.txt
     
