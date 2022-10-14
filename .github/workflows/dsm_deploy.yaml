@@ -6,7 +6,7 @@ on:
       env:
         description: "Environment to deploy"
         type: string
-        required: true
+        required: false
       run_apply:
         description: "Whether to run or not apply command for terragrunt"
         required: true
@@ -31,6 +31,7 @@ jobs:
 
     - name: Print Composer DAG
       working-directory: ${{ env.working_dir }}
+      if: ${{ inputs.run_apply == false }}
       run: |
         cat composer-dags/composer.txt
 
