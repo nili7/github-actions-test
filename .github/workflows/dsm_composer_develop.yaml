@@ -1,0 +1,22 @@
+name: '🧪 Composer DAG deployment to develop environment'
+
+on:
+  pull_request:
+    paths:
+      - dsm-data-pipeline/**
+  push:
+    branches:
+      - master #develop
+    paths:
+      - dsm-data-pipeline/**
+    tags-ignore:
+      - staging.*
+
+jobs:
+  call-deploy-dsm-composer-dev:
+    name: "Deploy composer DAGs to dev environment"
+    uses: "./.github/workflows/dsm_deploy.yaml"
+    with:
+      env: "develop"
+      run_apply: ${{ github.ref == 'refs/heads/master' && github.event_name == 'push' }}
+    secrets: inherit

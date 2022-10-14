@@ -1,0 +1,19 @@
+name: '🔬 Composer DAG deployment to staging environment'
+
+on:
+  push:
+    branches:
+      - master
+    # paths:
+    #   - dsm-data-pipeline/**
+    tags:
+      - staging.*
+
+jobs:
+  call-deploy-dsm-staging:
+    name: "Deploy composer DAGs to staging environment"
+    uses: "./.github/workflows/dsm_deploy.yaml"
+    with:
+      env: "staging"
+      run_apply: ${{ github.ref == 'refs/heads/staging' && github.event_name == 'push' }}
+    secrets: inherit

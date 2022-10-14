@@ -1,0 +1,44 @@
+name: '🚀 Composer DAGs automated deploy'
+
+on:
+  workflow_call:
+    inputs:
+      env:
+        description: "Environment to deploy"
+        type: string
+        required: true
+      run_apply:
+        description: "Whether to run or not apply command for terragrunt"
+        required: true
+        type: boolean
+
+
+jobs:
+  terraform:
+    name: 'Test tags'
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.env }}
+    env:
+      working_dir: "dsm-data-pipeline"
+    permissions:
+      id-token: write
+      contents: read
+
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Print Composer DAG
+      working-directory: ${{ env.working_dir }}
+      run: |
+        cat composer-dags/composer.txt
+
+    - name: Print environment variable
+      working-directory: ${{ env.working_dir }}
+      run: |
+        cat env/${{ inputs.env }}/env.txt
+    
+    
+
+  
