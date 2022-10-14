@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - master
-    paths:
-      - dsm-data-pipeline/**
+    # paths:
+    #   - dsm-data-pipeline/**
     tags:
       - staging.*
 
